@@ -11,8 +11,8 @@ io.on("connection", (socket) => {
 
     socket.on('data', function (msg) {
         io.emit('data', msg);
-        console.log(msg);
-        console.log();
+        //console.log(msg);
+        console.log(".");
 
         //from now on msg is a json
         msg = JSON.parse(msg);

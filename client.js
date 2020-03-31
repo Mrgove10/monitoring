@@ -12,19 +12,23 @@ setInterval(() => {
             si.mem((memData) => {
                 si.osInfo((OSData) => {
                     si.networkStats(0, (netData) => {
-                        let data =
-                        {
-                            hostname: OSData.hostname,
-                            data: {
-                                cpuspeed: cpuSpeedData,
-                                cputemp: cpuTempData,
-                                mem: memData,
-                                network: netData,
-                                uptime: si.time().uptime
+                        si.currentLoad((loadData) => {
+                            let data =
+                            {
+                                hostname: OSData.hostname,
+                                data: {
+                                    load : loadData,
+                                    cpuspeed: cpuSpeedData,
+                                    cputemp: cpuTempData,
+                                    mem: memData,
+                                    network: netData,
+                                    uptime: si.time().uptime
+                                }
                             }
-                        }
-                        server.emit('data', JSON.stringify(data));
+                            server.emit('data', JSON.stringify(data));
+                        });
                     });
+
                 });
             });
         });

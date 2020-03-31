@@ -16,6 +16,7 @@
     <p id="area"></p>
 
     <div id="chart"></div>
+    <div id="guage_cpu"></div>
 
     <script>
         var chart = c3.generate({
@@ -33,6 +34,19 @@
             transition: { duration: 0 }
         });
 
+        var gauge = c3.generate({
+            bindto: '#guage_cpu',
+            data: {
+                columns: [
+                    ['Load', 91.4]
+                ],
+                type: 'gauge'
+            },
+            size: {
+                height: 180
+            }
+        });
+
         var machines = [];
         var socket = io();
         /*  let data = JSON.stringify({
@@ -41,10 +55,12 @@
           socket.emit('data', data);*/
         socket.on('data', function (d) {
             d = JSON.parse(d);
+            console.log(d);
             if (machines.includes(d.hostname) == false) {
                 addMachineToList(d.hostname)
             }
             updateChart(chart, d.data.mem.used / 1000000000)
+            gaugeUpdate(d.data.load.currentload)
             //       updateChart(chart2, d.data.mem.free / 1000000000)
         });
 
@@ -57,11 +73,19 @@
         function updateChart(chart, data) {
             chart.flow({
                 columns: [
-                    ['MEM', data],
+                    ['Used Memory', data],
                 ],
             });
-        }
 
+
+        }
+        function gaugeUpdate(data) {
+            gauge.load({
+                columns: [
+                    ['Load', data]
+                ]
+            });
+        }
 
 
 
