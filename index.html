@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Socket.io</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.15/c3.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.14/c3.min.css" />
+</head>
+
+<body>
+    <h1>Communication with socket.io!</h1>
+    Machines currently sending data :
+    <p id="area"></p>
+
+    <div id="chart"></div>
+
+    <script>
+        var chart = c3.generate({
+            bindto: '#chart',
+            point: {
+                show: false
+            },
+            data: {
+                columns: [
+                    ['Used Memory', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                ],
+                connectNull: true
+            },
+
+            transition: { duration: 0 }
+        });
+
+        var machines = [];
+        var socket = io();
+        /*  let data = JSON.stringify({
+              message: "je suis le nouveau"
+          })
+          socket.emit('data', data);*/
+        socket.on('data', function (d) {
+            d = JSON.parse(d);
+            if (machines.includes(d.hostname) == false) {
+                addMachineToList(d.hostname)
+            }
+            updateChart(chart, d.data.mem.used / 1000000000)
+            //       updateChart(chart2, d.data.mem.free / 1000000000)
+        });
+
+        function addMachineToList(hostname) {
+            console.log("New machine joined : " + hostname)
+            machines.push(hostname);
+            document.getElementById("area").innerHTML += hostname + "<br>";
+        }
+
+        function updateChart(chart, data) {
+            chart.flow({
+                columns: [
+                    ['MEM', data],
+                ],
+            });
+        }
+
+
+
+
+    </script>
+    </script>
+</body>
+
+</html>
