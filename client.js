@@ -28,7 +28,6 @@ setInterval(() => {
                             server.emit('data', JSON.stringify(data));
                         });
                     });
-
                 });
             });
         });
