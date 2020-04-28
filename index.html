@@ -3,42 +3,46 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Socket.io</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.15/c3.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.14/c3.min.css" />
+    <title>Monitoring</title>
+    <script src="https://unpkg.com/mqtt@4.0.0/dist/mqtt.min.js"></script>
 </head>
 
 <body>
-    <h1>Communication with socket.io!</h1>
+    <h1>Monitoring</h1>
     Machines currently sending data :
     <p id="area"></p>
 
     <script>
+        var client = mqtt.connect('mqtt://test.mosquitto.org:8080')
+
+        client.on('connect', function () {
+            client.subscribe('2399ce45-7651-45a6-acaf-f8c5ca71180a', function (err) {
+            })
+        })
+
         var machines = []
         var lastvalues = [];
-        var socket = io();
-        socket.on('data', function (data) {
-            data = JSON.parse(data);
-            // console.log(data)
-            if (machines.length === 0 && !machines.includes(lv.hostname)) {
-                addMachineToList(lv.hostname);
+
+        client.on('message', function (topic, message) {
+            data = JSON.parse(message.toString());
+            console.log(data)
+            if (machines.length === 0 && !machines.includes(data.hostname)) {
+                addMachineToList(data.hostname);
             }
             else {
-                if (lastvalues.length === 0) {
-                    lastvalues.push(data);
-                } else {
-                    lastvalues.forEach(lv => {
-
-                        if (lv.hostname === data.hostname) {
-                            lv = data;
-                        } else {
-                            lastvalues.push(data);
-                        }
-
-                    });
-                }
+                /*  if (lastvalues.length === 0) {
+                      lastvalues.push(data);
+                  } else {
+                      lastvalues.forEach(lv => {
+  
+                          if (lv.hostname === data.hostname) {
+                              lv = data;
+                          } else {
+                              lastvalues.push(data);
+                          }
+  
+                      });
+                  }*/
             }
             console.log(lastvalues)
             console.log(machines)

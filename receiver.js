@@ -1,12 +1,11 @@
-const WebSocket = require('ws');
+var mqtt = require('mqtt')
+var client = mqtt.connect('mqtt://test.mosquitto.org')
 
-const ws1 = new WebSocket('ws:localhost:1596');
-const ws2 = new WebSocket('ws:localhost:1595');
+client.on('connect', function () {
+    client.subscribe('2399ce45-7651-45a6-acaf-f8c5ca71180a', function (err) {
+    })
+})
 
-const list = [ws1];
-
-list.forEach(element => {
-    element.on('message', function incoming(data) {
-        console.log(data);
-    });
-});
+client.on('message', function (topic, message) {
+    console.log(message.toString())
+})

@@ -1,9 +1,13 @@
-const WebSocket = require('ws');
 const si = require('systeminformation');
+var mqtt = require('mqtt')
+var client = mqtt.connect('mqtt://test.mosquitto.org')
 
-const wss = new WebSocket.Server({ port: 1596 });
+client.on('connect', function () {
 
-wss.on('connection', function connection(ws) {
+    const ora = require('ora');
+
+    const spinner = ora('Sendig Data').start();
+
     setInterval(() => {
         si.cpuCurrentspeed((cpuSpeedData) => {
             si.cpuTemperature((cpuTempData) => {
@@ -23,7 +27,7 @@ wss.on('connection', function connection(ws) {
                                         uptime: si.time().uptime
                                     }
                                 }
-                                ws.send(JSON.stringify(data));
+                                client.publish('2399ce45-7651-45a6-acaf-f8c5ca71180a', JSON.stringify(data));
                             });
                         });
                     });
