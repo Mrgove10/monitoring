@@ -1,5 +1,5 @@
 {
-  "name": "websocket-example",
+  "name": "gun-test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,11 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "ora": "^4.0.3",
-    "socket.io": "^2.3.0",
+    "ws": "^7.2.5",
     "systeminformation": "^4.23.1"
   }
 }
