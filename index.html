@@ -10,7 +10,7 @@
 <body>
     <h1>Monitoring</h1>
     Machines currently sending data :
-    <p id="area"></p>
+    <li id="area"></li>
 
     <script>
         var client = mqtt.connect('mqtt://test.mosquitto.org:8080')
@@ -20,38 +20,38 @@
             })
         })
 
-        var machines = []
         var lastvalues = [];
 
         client.on('message', function (topic, message) {
             data = JSON.parse(message.toString());
-            console.log(data)
-            if (machines.length === 0 && !machines.includes(data.hostname)) {
-                addMachineToList(data.hostname);
-            }
-            else {
-                /*  if (lastvalues.length === 0) {
-                      lastvalues.push(data);
-                  } else {
-                      lastvalues.forEach(lv => {
-  
-                          if (lv.hostname === data.hostname) {
-                              lv = data;
-                          } else {
-                              lastvalues.push(data);
-                          }
-  
-                      });
-                  }*/
-            }
-            console.log(lastvalues)
-            console.log(machines)
+            //     console.log(data)
+            addLastValuesForMachine(data.hostname, data)
+            // console.log(lastvalues)
         });
 
-        function addMachineToList(hostname) {
-            console.log("New machine joined : " + hostname)
-            machines.push(hostname);
-            document.getElementById("area").innerHTML += hostname + "<br>";
+        function addLastValuesForMachine(hostname, data) {
+            var found = false;
+            var foundIndex = -1;
+            for (var i = 0; i < lastvalues.length; i++) {
+                if (lastvalues[i].hostname === hostname) {
+                    found = true;
+                    foundIndex = i;
+                    break;
+                }
+            }
+
+            if (found === true && foundIndex > -1) {//there is already a value for thes machine so replace it
+                lastvalues[i] = data
+            }
+            else { // this is an unkon machine 
+                console.log("New machine joined : " + hostname)
+                lastvalues.push(data)
+            }
+            //html update
+            document.getElementById("area").innerHTML = "";
+            lastvalues.forEach(element => {
+                document.getElementById("area").innerHTML += "<ul>" + element.hostname + " cpu: " + element.data.load.currentload.toFixed(2) + " uptime: " + element.data.uptime + "</ul>";
+            });
         }
 
     </script>

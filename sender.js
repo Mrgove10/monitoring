@@ -6,7 +6,7 @@ client.on('connect', function () {
 
     const ora = require('ora');
 
-    const spinner = ora('Sendig Data').start();
+    ora('Sending Data').start();
 
     setInterval(() => {
         si.cpuCurrentspeed((cpuSpeedData) => {
