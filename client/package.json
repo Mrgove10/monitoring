@@ -2,7 +2,7 @@
   "name": "monitoring",
   "version": "1.0.0",
   "description": "Simple monitoring application",
-  "main": "sender.js",
+  "main": "client.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
