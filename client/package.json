@@ -1,6 +1,6 @@
 {
   "name": "monitoring",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Simple monitoring application",
   "main": "client.js",
   "scripts": {
@@ -9,8 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "configstore": "^5.0.1",
+    "first-run": "^2.0.0",
     "mqtt": "^4.0.0",
     "ora": "^4.0.4",
-    "systeminformation": "^4.23.8"
+    "request": "^2.88.2",
+    "systeminformation": "^4.23.8",
+    "uuid": "^8.0.0"
   }
 }

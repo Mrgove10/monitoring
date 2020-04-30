@@ -23,10 +23,11 @@ export class AppComponent implements OnInit {
     });
 
     client.on('message', (topic, message) => {
-      let data = JSON.parse(message.toString());
-     // console.log(data);
-      this.addLastValuesForMachine(data.hostname, data);
-   //   console.log(this.lastvalues);
+      console.log(message.toString());
+      if (message.length > 0) {
+        let data = JSON.parse(message.toString());
+        this.addLastValuesForMachine(data.hostname, data);
+      }
     });
   }
 
