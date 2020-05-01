@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var mqtt = require('./node_modules/mqtt')
 var client = mqtt.connect('mqtt://test.mosquitto.org')
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const si = require('systeminformation');
 const request = require('request');
 const mqtt = require('mqtt')

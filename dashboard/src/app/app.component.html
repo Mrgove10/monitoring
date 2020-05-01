@@ -2,6 +2,6 @@
 Machines currently sending data :
 <ul>
   <li *ngFor="let item of lastvalues" >
-    <ul> {{item.hostname}} cpu: {{item.data.load.currentload.toFixed(2)}} uptime: {{item.data.uptime}}</ul>
+    <ul> <b>{{item.UUID}}</b> {{item.hostname}} cpu: {{item.data.load.currentload.toFixed(2)}} uptime: {{item.data.uptime}}</ul>
   </li>
 </ul>
