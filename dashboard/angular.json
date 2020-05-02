@@ -24,10 +24,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css",
+              "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
-              "./node_modules/mqtt/dist/mqtt.min.js"
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "./node_modules/mqtt/dist/mqtt.min.js",
+              "./node_modules/leaflet/dist/leaflet.js"
             ]
           },
           "configurations": {

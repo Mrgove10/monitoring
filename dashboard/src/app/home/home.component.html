@@ -1,0 +1,15 @@
+<div class="container-fluid">
+
+
+  <h1>Monitoring</h1>
+  Machines currently sending data :
+  <ul>
+    <li *ngFor="let item of data.lastValues | keyvalue">
+      <ul> <a routerLink="/machine/{{item.key}}">{{item.key}}</a> | {{item.value.hostname}} cpu:
+        {{item.value.data.load.currentload.toFixed(2)}} uptime: {{item.value.data.uptime}}</ul>
+    </li>
+  </ul>
+
+  <div id="map" style="height: 500px; width: 500px;"></div>
+
+</div>

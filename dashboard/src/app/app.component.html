@@ -1,7 +1,3 @@
-<h1>Monitoring</h1>
-Machines currently sending data :
-<ul>
-  <li *ngFor="let item of lastvalues" >
-    <ul> <b>{{item.UUID}}</b> {{item.hostname}} cpu: {{item.data.load.currentload.toFixed(2)}} uptime: {{item.data.uptime}}</ul>
-  </li>
-</ul>
+<div id="main">
+  <router-outlet></router-outlet>
+</div>
