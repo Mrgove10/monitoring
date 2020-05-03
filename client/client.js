@@ -36,7 +36,6 @@ if (firstRun()) {
     console.log("First Application run, setting up");
     config.set("machineUUID", uuidv4());
     console.log("Machine identifier : " + config.get("machineUUID"));
-    GetgeoIpPostion();
 }
 
 // verbose mode
@@ -52,6 +51,8 @@ if (verbose) {
 let machineUUID = config.get("machineUUID");
 let geoIP = config.get("geoIP");
 var client = mqtt.connect('mqtt://test.mosquitto.org');
+
+GetgeoIpPostion();
 
 client.on('connect', function () {
     if (!verbose) {
@@ -105,40 +106,6 @@ setInterval(() => {
     GetgeoIpPostion();
 }, 1000 * 3600 * 24);//get it once a day (for dynamic ip's)
 
-function GetAllData() {
-    si.cpuCurrentspeed((cpuSpeedData) => {
-        si.cpuTemperature((cpuTempData) => {
-            si.mem((memData) => {
-                si.osInfo((OSData) => {
-                    si.networkStats(0, (netData) => {
-                        si.currentLoad((loadData) => {
-                            var data = "gtgg"
-                            //{
-                            /* hostname: OSData.hostname,
-                             version: pjson.version,
-                             uuid: machineUUID
-                             /*   geoIP: geoIP,
-                                data: {
-                                    load: loadData,
-                                    cpuspeed: cpuSpeedData,
-                                    cputemp: cpuTempData,
-                                    mem: memData,
-                                    network: netData,
-                                    uptime: si.time().uptime
-                                }*/
-                            // }
-                            if (verbose) {
-                                console.log(data);
-                            }
-                            return data;
-                        });
-                    });
-                });
-            });
-        });
-    });
-}
-
 function GetgeoIpPostion() {
     if (verbose) {
         console.log("Getting IP Position")
@@ -158,6 +125,7 @@ function GetgeoIpPostion() {
                 if (verbose) {
                     console.log("Failed to get GeoIP data !");
                 }
+                config.set("geoIP", data);
             }
         }
     });

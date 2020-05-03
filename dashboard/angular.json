@@ -26,13 +26,16 @@
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
-              "./node_modules/leaflet/dist/leaflet.css"
+              "./node_modules/leaflet/dist/leaflet.css",
+              "./node_modules/font-awesome/css/font-awesome.min.css",
+              "./node_modules/c3/c3.min.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "./node_modules/mqtt/dist/mqtt.min.js",
-              "./node_modules/leaflet/dist/leaflet.js"
+              "./node_modules/leaflet/dist/leaflet.js",
+              "./node_modules/c3/c3.min.js"
             ]
           },
           "configurations": {
@@ -127,6 +130,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "dashboard"
 }

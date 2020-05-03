@@ -12,11 +12,14 @@ export class DataService {
   public lastValues: Map<string, string> = new Map<string, string>();
 
   public init() {
-    console.log("starting daata Service")
+    console.log('[DATA] Started');
     const client = mqtt.connect('mqtt://test.mosquitto.org:8080');
 
     client.on('connect', () => {
       client.subscribe('2399ce45-7651-45a6-acaf-f8c5ca71180a', (err) => {
+        if (!err) {
+          console.log('[DATA] Connected To Broker');
+        }
       });
     });
 
@@ -29,13 +32,29 @@ export class DataService {
 
   }
 
+  /**
+   * Returns the latest value for the given UUID
+   */
   public GetlastvaluesForUUID(uuid: string) {
     return this.lastValues.get(uuid);
   }
 
+  public GetAllGeoIP() {
+    let tmp = [];
+    this.lastValues.forEach((element:any)=>{
+      if (element.geoIP !== null) {
+        tmp.push({
+          ip: element.uuid,
+          geoIP: element.geoIP
+        });
+      }
+    })
+    return tmp;
+  }
+
   private addLastValuesForMachine(uuid: string, data) {
     if (!this.lastValues.has(uuid)) {
-      console.log('New machine joined : ' + data.hostname);
+      console.log('[DATA] New machine joined : ' + data.hostname);
     }
     this.lastValues.set(uuid, data);
   }

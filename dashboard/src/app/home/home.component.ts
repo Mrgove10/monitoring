@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { DataService } from '../services/data/data.service';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -28,6 +27,21 @@ export class HomeComponent implements OnInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    L.marker([51.5, -0.09]).addTo(map);
+    var theMarker = {};
+
+    this.data.GetAllGeoIP().forEach(element => {
+      if (element.geoIP !== null && element.geoIP !== undefined) {
+        theMarker = L.marker([element.geoIP.lat, element.geoIP.lon]).addTo(map);  
+      }
+    });
+    
+    setInterval(() => {
+      map.removeLayer(theMarker);
+      this.data.GetAllGeoIP().forEach(element => {
+        if (element.geoIP !== null && element.geoIP !== undefined) {
+          theMarker = L.marker([element.geoIP.lat, element.geoIP.lon]).addTo(map);  
+        }
+      });
+    }, 5000);
   }
 }
