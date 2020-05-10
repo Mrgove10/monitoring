@@ -64,41 +64,52 @@ client.on('connect', function () {
     }
 
     setInterval(() => {
-        si.cpuCurrentspeed((cpuSpeedData) => {
-            si.cpuTemperature((cpuTempData) => {
-                si.mem((memData) => {
-                    si.osInfo((OSData) => {
-                        si.networkStats(0, (netData) => {
-                            si.currentLoad((loadData) => {
-                                var data = {
-                                    hostname: OSData.hostname,
-                                    version: pjson.version,
-                                    uuid: machineUUID,
-                                    geoIP: geoIP,
-                                    data: {
-                                        load: loadData,
-                                        cpuspeed: cpuSpeedData,
-                                        cputemp: cpuTempData,
-                                        mem: memData,
-                                        network: netData,
-                                        uptime: si.time().uptime
-                                    }
-                                }
-                                if (verbose) {
-                                    console.log(data);
-                                }
-                                client.publish('2399ce45-7651-45a6-acaf-f8c5ca71180a',
-                                    JSON.stringify(data),
-                                    (err) => {
-                                        if (err) console.log(err)
+        si.system((systemData) => {
+            si.diskIO((diskData) => {
+                si.networkInterfaces((networkinterfaceData) => {
+                    si.cpu((cpuData) => {
+                        si.cpuCurrentspeed((cpuSpeedData) => {
+                            si.cpuTemperature((cpuTempData) => {
+                                si.mem((memData) => {
+                                    si.osInfo((OSData) => {
+                                        si.networkStats(0, (netData) => {
+                                            si.currentLoad((loadData) => {
+                                                var data = {
+                                                    hostname: OSData.hostname,
+                                                    version: pjson.version,
+                                                    uuid: machineUUID,
+                                                    geoIP: geoIP,
+                                                    data: {
+                                                        load: loadData,
+                                                        cpuspeed: cpuSpeedData,
+                                                        cputemp: cpuTempData,
+                                                        mem: memData,
+                                                        network: netData,
+                                                        uptime: si.time().uptime,
+                                                        system : systemData,
+                                                        disk: diskData,
+                                                        network : networkinterfaceData,
+                                                        cpu : cpuData
+                                                    }
+                                                }
+                                                if (verbose) {
+                                                    console.log(data);
+                                                }
+                                                client.publish('2399ce45-7651-45a6-acaf-f8c5ca71180a',
+                                                    JSON.stringify(data),
+                                                    (err) => {
+                                                        if (err) console.log(err)
+                                                    });
+                                            });
+                                        });
                                     });
+                                });
                             });
                         });
                     });
                 });
             });
         });
-
     }, 1000);
 });
 
