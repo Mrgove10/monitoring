@@ -1,5 +1,9 @@
 # Simple Monitoring application
 
+# Status as of 14/05/2020
+
+**[NetData](https://github.com/netdata/netdata/) Just did a great update to there cloud visualisation platform. And renders this project a little outdated. NetData is great and I have been using it for a while now. So this projet is now getting the tag :** [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 Angular in electron : https://malcoded.com/posts/angular-desktop-electron/
 
 Packaging electron app : https://medium.com/how-to-electron/a-complete-guide-to-packaging-your-electron-app-1bdc717d739f
